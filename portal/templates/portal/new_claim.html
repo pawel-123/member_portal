@@ -1,0 +1,15 @@
+{% extends "portal/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <p>Submit a new claim</p>
+
+    <form action="{% url 'portal:new_claim' %}" method='post' class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button name="submit">Submit claim</button>
+        {% endbuttons %}
+    </form>
+
+{% endblock content %}

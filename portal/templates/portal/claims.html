@@ -1,0 +1,32 @@
+{% extends "portal/base.html" %}
+
+{% block content %}
+    <p>This is the list of submitted claims</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Member</th>
+                <th>Product</th>
+                <th>Claim Status</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for claim in claims %}
+                <tr>
+                    <td>{{ claim.id }}</td>
+                    <td>{{ claim.member }}</td>
+                    <td>{{ claim.product }}</td>
+                    <td>{{ claim.status }}</td>
+                    <td>
+                        <a href="{% url 'portal:claim' claim.id %}">
+                            {{ claim.text|slice:":30" }}...
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

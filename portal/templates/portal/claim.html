@@ -1,0 +1,12 @@
+{% extends "portal/base.html" %}
+
+{% block content %}
+    <p>Details about claim ID-{{ claim.id }}</p>
+
+    <p><b>Claim ID:</b> {{ claim.id }}</p>
+    <p><b>Member:</b> {{ claim.member }}</p>
+    <p><b>Product:</b> {{ claim.product }}</p>
+    <p><b>Claim Status:</b> {{ claim.status }}</p>
+    <p><b>Message:</b> {{ claim.text|linebreaks }}</p>
+
+{% endblock content %}

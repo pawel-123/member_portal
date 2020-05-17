@@ -1,0 +1,30 @@
+{% extends "portal/base.html" %}
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Welcome to Member Portal</h1>
+            <p class="lead">Submit your claim today</p>
+        </div>
+    </div>
+
+    <div class="card-deck">
+        {% for product in products %}
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-title text-primary">{{ product }}</h5>
+                </div>
+                <div class="card-body">
+                    <ol class="card-text text-left">
+                        <li>Fill in the {{ product }} form</li>
+                        <li>Attach your medical records</li>
+                        <li>Get your claim reviewed within 48 hours</li>
+                    </ol>
+                    <a href="{% url 'portal:new_claim_product' product_id=product.id %}" class="btn btn-primary">Online Form</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
