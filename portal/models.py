@@ -62,6 +62,17 @@ class Claim(models.Model):
         default=SUBMITTED,
     )
 
+    def get_row_color(self):
+        """Returns boostrap class for table row color"""
+        if self.status == 'Submitted':
+            return "table-light"
+        elif self.status == 'Denied':
+            return "table-danger"
+        elif self.status == 'Approved':
+            return "table-active"
+        elif self.status == 'Completed':
+            return "table-success"
+
     def __str__(self):
         """Return a string representation of a claim"""
         return f"{self.id} - {self.member} - {self.product}"

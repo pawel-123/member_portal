@@ -2,22 +2,24 @@
 
 {% block content %}
     <p>This is the list of submitted claims</p>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Claim ID</th>
                 <th>Member</th>
                 <th>Product</th>
+                <th>Submission Date</th>
                 <th>Claim Status</th>
                 <th>Message</th>
             </tr>
         </thead>
         <tbody>
             {% for claim in claims %}
-                <tr>
+                <tr class={{ claim.get_row_color }}>
                     <td>{{ claim.id }}</td>
                     <td>{{ claim.member }}</td>
                     <td>{{ claim.product }}</td>
+                    <td>{{ claim.date_added|date }}</td>
                     <td>{{ claim.status }}</td>
                     <td>
                         <a href="{% url 'portal:claim' claim.id %}">
