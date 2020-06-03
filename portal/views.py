@@ -1,9 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Product, Claim
 from .forms import ClaimForm
+
+import django_tables2 as tables
+from .tables import ClaimsTable
 
 def index(request):
     """The home page for member portal"""
@@ -11,13 +15,20 @@ def index(request):
     context = {'products': products}
     return render(request, 'portal/index.html', context)
 
-@login_required
-def claims(request):
-    """The overview of claims"""
-    # claims = Claim.objects.all()
-    claims = Claim.objects.filter(member=request.user).order_by('-date_added')
-    context = {'claims': claims}
-    return render(request, 'portal/claims.html', context)
+# @login_required
+# def claims(request):
+#     """The overview of claims"""
+#     claims = Claim.objects.filter(member=request.user).order_by('-date_added')
+#     context = {'claims': claims}
+#     return render(request, 'portal/claims.html', context)
+
+class ClaimsView(LoginRequiredMixin, tables.SingleTableView):
+    table_class = ClaimsTable
+    # queryset = Claim.objects.all()
+    template_name = "portal/claims.html"
+
+    def get_queryset(self):
+        return Claim.objects.filter(member=self.request.user).order_by('-date_added')
 
 @login_required
 def claim(request, claim_id):

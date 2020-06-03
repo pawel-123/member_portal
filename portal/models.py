@@ -62,6 +62,10 @@ class Claim(models.Model):
         default=SUBMITTED,
     )
 
+    # improve later with reverse and refer to a view name rather than an absolute url?
+    def get_absolute_url(self):
+        return "/portal/claims/%i/" % self.id
+
     def get_row_color(self):
         """Returns boostrap class for table row color"""
         if self.status == 'Submitted':
