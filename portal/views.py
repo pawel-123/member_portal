@@ -6,8 +6,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Claim
 from .forms import ClaimForm
 
-import django_tables2 as tables
+from django_tables2 import SingleTableMixin, SingleTableView
 from .tables import ClaimsTable
+from django_filters.views import FilterView
+from .filters import ClaimFilter
 
 def index(request):
     """The home page for member portal"""
@@ -22,10 +24,20 @@ def index(request):
 #     context = {'claims': claims}
 #     return render(request, 'portal/claims.html', context)
 
-class ClaimsView(LoginRequiredMixin, tables.SingleTableView):
+class ClaimsView(LoginRequiredMixin, SingleTableView):
     table_class = ClaimsTable
     # queryset = Claim.objects.all()
     template_name = "portal/claims.html"
+
+    def get_queryset(self):
+        return Claim.objects.filter(member=self.request.user).order_by('-date_added')
+
+class FilteredClaimsView(LoginRequiredMixin, SingleTableMixin, FilterView):
+    table_class = ClaimsTable
+    model = Claim
+    template_name = "portal/filtered_claims.html"
+
+    filterset_class = ClaimFilter
 
     def get_queryset(self):
         return Claim.objects.filter(member=self.request.user).order_by('-date_added')

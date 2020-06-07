@@ -37,7 +37,9 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'bootstrap4',
+    'bootstrap3',
     'django_tables2',
+    'django_filters',
 
     # Default django apps
     'django.contrib.admin',

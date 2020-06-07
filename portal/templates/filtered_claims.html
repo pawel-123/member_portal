@@ -1,0 +1,10 @@
+{% extends "portal/base.html" %}
+{% load bootstrap4 %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    <p>This is the list of submitted claims</p>
+    {% render_table table %}
+
+{% endblock content %}

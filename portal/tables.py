@@ -8,7 +8,7 @@ class ClaimsTable(tables.Table):
     product = tables.Column()
     date_added = tables.Column(verbose_name="Submission Date")
     status = tables.Column(verbose_name="Claim Status")
-    text = tables.Column(verbose_name="Message", linkify=True)
+    text = tables.Column(verbose_name="Text Message", linkify=True)
     link = tables.TemplateColumn(template_name='portal/claims_link_column.html')
 
     class Meta:

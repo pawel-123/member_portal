@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-from .views import ClaimsView
+from .views import ClaimsView, FilteredClaimsView
 
 app_name = 'portal'
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     # path('claims/', views.claims, name='claims'),
     path('claims/', ClaimsView.as_view(), name='claims'),
+    path('filtered_claims/', FilteredClaimsView.as_view(), name='filtered_claims'),
     path('claims/<int:claim_id>/', views.claim, name='claim'),
     path('new_claim/<int:product_id>/', views.new_claim, name='new_claim_product'),
     path('new_claim/', views.new_claim, name='new_claim'),

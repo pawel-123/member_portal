@@ -1,0 +1,18 @@
+{% extends "portal/base.html" %}
+{% load bootstrap4 %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    <p>This is the list of submitted claims</p>
+
+    {% if filter %}
+        <form action="" method="get" class="form form-inline">
+            {% bootstrap_form filter.form layout='inline' %}
+            {% bootstrap_button 'filter' %}
+        </form>
+    {% endif %}
+
+    {% render_table table %}
+
+{% endblock content %}
