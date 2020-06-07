@@ -39,6 +39,10 @@ class FilteredClaimsView(LoginRequiredMixin, SingleTableMixin, FilterView):
 
     filterset_class = ClaimFilter
 
+    table_pagination = {
+        "per_page": 3
+    }
+
     def get_queryset(self):
         return Claim.objects.filter(member=self.request.user).order_by('-date_added')
 
