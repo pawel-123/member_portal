@@ -8,8 +8,10 @@ class ClaimForm(forms.ModelForm):
         fields = [
             'product',
             'text',
+            'attachment',
         ]
         labels = {
             'product': 'Type of claim',
             'text': 'Your message',
+            'attachment': 'Your medical file',
         }
