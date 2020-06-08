@@ -65,7 +65,7 @@ def new_claim(request, product_id=1):
         form = ClaimForm(initial={'product': product_id})
     else:
         # POST data submitted; process data
-        form = ClaimForm(data=request.POST)
+        form = ClaimForm(request.POST, request.FILES)
         if form.is_valid():
             new_claim = form.save(commit=False)
             new_claim.member = request.user

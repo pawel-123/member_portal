@@ -8,5 +8,11 @@
     <p><b>Product:</b> {{ claim.product }}</p>
     <p><b>Claim Status:</b> {{ claim.status }}</p>
     <p><b>Message:</b> {{ claim.text|linebreaks }}</p>
+    <p>
+        <b>Attachment:</b>
+        <a href="{{ claim.attachment.url }}" target="_blank">
+            {{ claim.attachment }}
+        </a>
+    </p>
 
 {% endblock content %}
