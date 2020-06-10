@@ -42,7 +42,7 @@ class Claim(models.Model):
     text = models.TextField()
     date_added = models.DateTimeField(default=timezone.now)
     member = models.ForeignKey(User, on_delete=models.CASCADE)
-    attachment = models.FileField(upload_to='claims/', null=True, blank=True)
+    # attachment = models.FileField(upload_to='claims/', null=True, blank=True)
 
     # Claim status choices
     SUBMITTED = 'Submitted'
@@ -82,7 +82,7 @@ class Claim(models.Model):
         """Return a string representation of a claim"""
         return f"{self.id} - {self.member} - {self.product}"
 
-# class ClaimAttachment(models.Model):
-#     """An image attached by the member when submitting a Claim"""
-#     claim = models.ForeignKey(Claim, on_delete=models.CASCADE)
-#     attachment = models.FileField(upload_to='claims')
+class ClaimAttachment(models.Model):
+    """A file attached by the member when submitting a Claim"""
+    claim = models.ForeignKey(Claim, on_delete=models.CASCADE)
+    attachment = models.FileField(upload_to='claims/')

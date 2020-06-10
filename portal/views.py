@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Product, Claim
-from .forms import ClaimForm
+from .models import Product, Claim, ClaimAttachment
+from .forms import NewClaimForm
+
+from django.views.generic.edit import FormView, CreateView
 
 from django_tables2 import SingleTableMixin, SingleTableView
 from .tables import ClaimsTable
@@ -57,21 +59,36 @@ def claim(request, claim_id):
     context = {'claim': claim}
     return render(request, 'portal/claim.html', context)
 
-@login_required
-def new_claim(request, product_id=1):
-    """Submit a new claim"""
-    if request.method != 'POST':
-        # No data submitted; create a blank form
-        form = ClaimForm(initial={'product': product_id})
-    else:
-        # POST data submitted; process data
-        form = ClaimForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_claim = form.save(commit=False)
-            new_claim.member = request.user
-            form.save()
-            return redirect('portal:claims')
+# @login_required
+# def new_claim(request, product_id=1):
+#     """Submit a new claim"""
+#     if request.method != 'POST':
+#         # No data submitted; create a blank form
+#         form = ClaimForm(initial={'product': product_id})
+#     else:
+#         # POST data submitted; process data
+#         form = ClaimForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_claim = form.save(commit=False)
+#             new_claim.member = request.user
+#             form.save()
+#             return redirect('portal:claims')
 
-    # Display a blank or invalid form
-    context = {'form': form}
-    return render(request, 'portal/new_claim.html', context)
+#     # Display a blank or invalid form
+#     context = {'form': form}
+#     return render(request, 'portal/new_claim.html', context)
+
+# pre-selection of product for homepage links still needs to be implemented
+class NewClaimView(LoginRequiredMixin, CreateView):
+    # if not product_id:
+    #     product_id = 1
+    # product_id=1 # somehow this stays when the view is getting generated, so I need to figure out a way for the URL from index.html to override it
+    model = Claim
+    form_class = NewClaimForm
+    template_name = 'portal/new_claim.html'
+    # initial={'product': product_id}
+    # success_url = 'portal/' # commented it out for now but I'm not sure how to set it if I wanted to redirect elsewhere - by default it redirects according to get_absolute_url of Claim model
+
+    def form_valid(self, form):
+        form.instance.member = self.request.user
+        return super(NewClaimView, self).form_valid(form)
