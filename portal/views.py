@@ -55,9 +55,11 @@ def claim(request, claim_id):
     claim = get_object_or_404(Claim, id=claim_id)
     if claim.member != request.user:
         raise Http404
+    attachments = ClaimAttachment.objects.filter(claim__member=request.user, claim__id=claim_id)
 
-    context = {'claim': claim}
+    context = {'claim': claim, 'attachments': attachments}
     return render(request, 'portal/claim.html', context)
+
 
 # @login_required
 # def new_claim(request, product_id=1):
