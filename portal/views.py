@@ -82,15 +82,21 @@ def claim(request, claim_id):
 
 # pre-selection of product for homepage links still needs to be implemented
 class NewClaimView(LoginRequiredMixin, CreateView):
-    # if not product_id:
-    #     product_id = 1
-    # product_id=1 # somehow this stays when the view is getting generated, so I need to figure out a way for the URL from index.html to override it
     model = Claim
     form_class = NewClaimForm
     template_name = 'portal/new_claim.html'
-    # initial={'product': product_id}
-    # success_url = 'portal/' # commented it out for now but I'm not sure how to set it if I wanted to redirect elsewhere - by default it redirects according to get_absolute_url of Claim model
+    # success_url = '/portal/' # commented out as we use "get_absolute_url from the model to redirect to newly created claim detail view"
+
+    # figure out how to avoid product_id=1 in order to generate blank form when accessing form from the navigation link
+    def get(self, request, product_id=1, *args, **kwargs):
+        form = self.form_class(initial={'product': product_id})
+        return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         form.instance.member = self.request.user
         return super(NewClaimView, self).form_valid(form)
+
+    # def get_form_kwargs(self):
+    #     kwargs = super(NewClaimView, self).get_form_kwargs()
+    #     # later try product_id instead of product
+    #     kwargs['product_id'] = self.request.product_id

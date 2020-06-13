@@ -21,6 +21,7 @@ class NewClaimForm(forms.ModelForm):
     class Meta:
         model = Claim
         fields = ['product', 'text']
+        # initial = {'product_id': 'product_id'}
 
     files = MultiFileField(min_num=1, max_num=5, max_file_size=1024*1024*10)
 
