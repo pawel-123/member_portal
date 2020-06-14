@@ -9,12 +9,16 @@
     <p><b>Claim Status:</b> {{ claim.status }}</p>
     <p><b>Message:</b> {{ claim.text|linebreaks }}</p>
     <p>
-        <b>Attachment:</b>
+        <b>Claim Attachments:</b>
+
         <ul>
             {% for attachment in attachments %}
                 <li>
-                    <a href="{{ attachment.attachment.url }}" target="_blank ">
-                        {{ attachment.attachment }}
+                    <a href="{{ attachment.attachment.url }}" target="_blank">
+                        <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
+                    </a>
+                    <a href="{{ attachment.attachment.url }}" download>
+                        <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
                     </a>
                 </li>
             {% endfor %}
