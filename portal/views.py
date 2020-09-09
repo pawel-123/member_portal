@@ -85,9 +85,10 @@ class NewClaimView(LoginRequiredMixin, CreateView):
     model = Claim
     form_class = NewClaimForm
     template_name = 'portal/new_claim.html'
-    # success_url = '/portal/' # commented out as we use "get_absolute_url from the model to redirect to newly created claim detail view"
 
-    # figure out how to avoid product_id=1 in order to generate blank form when accessing form from the navigation link
+    # commented out as we use "get_absolute_url from the model to redirect to newly created claim detail view"
+    # success_url = '/portal/'
+
     def get(self, request, product_id=None, *args, **kwargs):
         form = self.form_class(initial={'product': product_id})
         return render(request, self.template_name, {'form': form})
@@ -95,3 +96,23 @@ class NewClaimView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.member = self.request.user
         return super(NewClaimView, self).form_valid(form)
+
+from bs4 import BeautifulSoup
+import requests
+from requests import get
+
+def attachment_download(request):
+
+    domain = "http://localhost:8000"
+    page = requests.get("http://localhost:8000/portal/claims/17/")
+    html = page.text
+    print(html)
+    # soup = BeautifulSoup(html, "html.parser")
+
+#     # for link in soup.find_all('a'):
+#     #     url = link.get('href')
+#     #     print(domain + url)
+#     #     with open(url, "wb") as file:
+#     #         response = get(domain + url)
+#     #         file.write(response.content)
+

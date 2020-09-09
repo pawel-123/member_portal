@@ -14,4 +14,5 @@ urlpatterns = [
     path('claims/<int:claim_id>/', views.claim, name='claim'),
     path('new_claim/', NewClaimView.as_view(), name='new_claim'),
     path('new_claim/<int:product_id>/', NewClaimView.as_view(), name='new_claim_product'),
+    path('claims/download', views.attachment_download, name='download')
 ]
