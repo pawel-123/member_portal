@@ -1,30 +1,27 @@
 {% extends "portal/base.html" %}
 
 {% block content %}
-    <p>Details about claim ID-{{ claim.id }}</p>
+<p>Details about claim ID-{{ claim.id }}</p>
 
-    <p><b>Claim ID:</b> {{ claim.id }}</p>
-    <p><b>Member:</b> {{ claim.member }}</p>
-    <p><b>Product:</b> {{ claim.product }}</p>
-    <p><b>Claim Status:</b> {{ claim.status }}</p>
-    <p><b>Message:</b> {{ claim.text|linebreaks }}</p>
-    <p>
-        <b>Claim Attachments:</b>
-        <a href="{% url 'portal:download' %}">
-            Download all attachments
+<p><b>Claim ID:</b> {{ claim.id }}</p>
+<p><b>Member:</b> {{ claim.member }}</p>
+<p><b>Product:</b> {{ claim.product }}</p>
+<p><b>Claim Status:</b> {{ claim.status }}</p>
+<p><b>Message:</b> {{ claim.text|linebreaks }}</p>
+<p>
+    <b>Claim Attachments:</b>
+<ul>
+    {% for attachment in attachments %}
+    <li>
+        <a href="{{ attachment.attachment.url }}" target="_blank">
+            Open <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
         </a>
-        <ul>
-            {% for attachment in attachments %}
-                <li>
-                    <a href="{{ attachment.attachment.url }}" target="_blank">
-                        Open <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
-                    </a>
-                    <a href="{{ attachment.attachment.url }}" download>
-                        Download <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </p>
+        <a href="{{ attachment.attachment.url }}" download>
+            Download <img src="{{ attachment.attachment.url }}" alt="attachment.attachment" style="width:100px;">
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</p>
 
 {% endblock content %}

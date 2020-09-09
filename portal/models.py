@@ -63,20 +63,21 @@ class Claim(models.Model):
         default=SUBMITTED,
     )
 
-    # improve later with reverse and refer to a view name rather than an absolute url?
+    # improve with reverse and refer to a view name rather than an absolute url?
     def get_absolute_url(self):
         return "/portal/claims/%i/" % self.id
 
-    def get_row_color(self):
-        """Returns boostrap class for table row color"""
-        if self.status == 'Submitted':
-            return "table-light"
-        elif self.status == 'Denied':
-            return "table-danger"
-        elif self.status == 'Approved':
-            return "table-active"
-        elif self.status == 'Completed':
-            return "table-success"
+    # Fix claims table row colouring based on claim status (broken after implementing with django-tables2 and django-filter)
+    # def get_row_color(self):
+    #     """Returns boostrap class for table row color"""
+    #     if self.status == 'Submitted':
+    #         return "table-light"
+    #     elif self.status == 'Denied':
+    #         return "table-danger"
+    #     elif self.status == 'Approved':
+    #         return "table-active"
+    #     elif self.status == 'Completed':
+    #         return "table-success"
 
     def __str__(self):
         """Return a string representation of a claim"""

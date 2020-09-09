@@ -13,6 +13,5 @@ class ClaimFilter(FilterSet):
         model = Claim
         fields = {
             "product": ["exact"],
-            # "text": ["contains"],
             "status": ["exact"],
         }
